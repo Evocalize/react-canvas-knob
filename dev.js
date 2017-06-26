@@ -63,6 +63,15 @@ class Root extends React.Component {
           min={0}
           max={500}
         />
+
+        <Knob
+            value={this.state.value}
+            onChange={this.handleChange}
+            step={10}
+            min={0}
+            max={500}
+            postInputText="%"
+        />
       </div>
     );
   }

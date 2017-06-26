@@ -32,6 +32,7 @@ class Knob extends React.Component {
     angleOffset: React.PropTypes.number,
     disableMouseWheel: React.PropTypes.bool,
     title: React.PropTypes.string,
+    postInputText: React.PropTypes.string
   };
 
   static defaultProps = {
@@ -57,6 +58,7 @@ class Knob extends React.Component {
     angleArc: 360,
     angleOffset: 0,
     disableMouseWheel: false,
+    postInputText: '',
   };
 
   constructor(props) {
@@ -299,9 +301,37 @@ class Knob extends React.Component {
     return null;
   };
 
+  renderPostInputText = () => {
+    if (!this.props.postInputText) {
+      return null;
+    }
+
+    return (
+      <span
+        style={this.postInputStyle()}
+      >
+          {this.props.postInputText}
+      </span>
+    );
+  };
+
+  postInputStyle = () => {
+    if (this.props.postInputStyle) {
+      return this.props.postInputStyle;
+    }
+
+    return {
+      font: `${this.props.fontWeight} ${(this.w / this.digits / 2) >> 0}px ${this.props.font}`,
+      color: this.props.inputColor || this.props.fgColor,
+      position: 'absolute',
+      top: `${(this.w / 2 - 10) >> 0}px`,
+      right: `${((this.w / 3) - 16) >> 0}px`,
+    };
+  };
+
   render = () => (
     <div
-      style={{ width: this.w, height: this.h, display: 'inline-block' }}
+      style={{ width: this.w, height: this.h, display: 'inline-block', position: 'relative' }}
       onWheel={this.props.readOnly || this.props.disableMouseWheel ? null : this.handleWheel}
     >
       <canvas
@@ -311,6 +341,7 @@ class Knob extends React.Component {
         title={this.props.title ? `${this.props.title}: ${this.props.value}` : this.props.value}
       />
       {this.renderCentre()}
+      {this.renderPostInputText()}
     </div>
   );
 }

@@ -179,11 +179,39 @@ var Knob = function (_React$Component) {
       return null;
     };
 
+    _this.renderPostInputText = function () {
+      if (!_this.props.postInputText) {
+        return null;
+      }
+
+      return _react2.default.createElement(
+        'span',
+        {
+          style: _this.postInputStyle()
+        },
+        _this.props.postInputText
+      );
+    };
+
+    _this.postInputStyle = function () {
+      if (_this.props.postInputStyle) {
+        return _this.props.postInputStyle;
+      }
+
+      return {
+        font: _this.props.fontWeight + ' ' + (_this.w / _this.digits / 2 >> 0) + 'px ' + _this.props.font,
+        color: _this.props.inputColor || _this.props.fgColor,
+        position: 'absolute',
+        top: (_this.w / 2 - 10 >> 0) + 'px',
+        right: (_this.w / 3 - 16 >> 0) + 'px'
+      };
+    };
+
     _this.render = function () {
       return _react2.default.createElement(
         'div',
         {
-          style: { width: _this.w, height: _this.h, display: 'inline-block' },
+          style: { width: _this.w, height: _this.h, display: 'inline-block', position: 'relative' },
           onWheel: _this.props.readOnly || _this.props.disableMouseWheel ? null : _this.handleWheel
         },
         _react2.default.createElement('canvas', {
@@ -194,7 +222,8 @@ var Knob = function (_React$Component) {
           onMouseDown: _this.props.readOnly ? null : _this.handleMouseDown,
           title: _this.props.title ? _this.props.title + ': ' + _this.props.value : _this.props.value
         }),
-        _this.renderCentre()
+        _this.renderCentre(),
+        _this.renderPostInputText()
       );
     };
 
@@ -282,7 +311,8 @@ Knob.propTypes = {
   angleArc: _react2.default.PropTypes.number,
   angleOffset: _react2.default.PropTypes.number,
   disableMouseWheel: _react2.default.PropTypes.bool,
-  title: _react2.default.PropTypes.string
+  title: _react2.default.PropTypes.string,
+  postInputText: _react2.default.PropTypes.string
 };
 Knob.defaultProps = {
   min: 0,
@@ -306,6 +336,7 @@ Knob.defaultProps = {
   displayInput: true,
   angleArc: 360,
   angleOffset: 0,
-  disableMouseWheel: false
+  disableMouseWheel: false,
+  postInputText: ''
 };
 exports.default = Knob;

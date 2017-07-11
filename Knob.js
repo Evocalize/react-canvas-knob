@@ -95,9 +95,16 @@ class Knob extends React.Component {
   getArcToValue = (v) => {
     let startAngle;
     let endAngle;
-    const angle = !this.props.log
+    let angle = !this.props.log
     ? ((v - this.props.min) * this.angleArc) / (this.props.max - this.props.min)
     : Math.log(Math.pow((v / this.props.min), this.angleArc)) / Math.log(this.props.max / this.props.min);
+
+    // If value is null, set the angle to 0 to prevent the previous calculation
+    // from drawing a nearly-full bar based off of the min.
+    if (v === null || v === undefined) {
+      angle = 0;
+    }
+
     if (!this.props.clockwise) {
       startAngle = this.endAngle + 0.00001;
       endAngle = startAngle - angle - 0.00001;

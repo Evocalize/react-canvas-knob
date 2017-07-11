@@ -30,6 +30,13 @@ var Knob = function (_React$Component) {
       var startAngle = void 0;
       var endAngle = void 0;
       var angle = !_this.props.log ? (v - _this.props.min) * _this.angleArc / (_this.props.max - _this.props.min) : Math.log(Math.pow(v / _this.props.min, _this.angleArc)) / Math.log(_this.props.max / _this.props.min);
+
+      // If value is null, set the angle to 0 to prevent the previous calculation
+      // from drawing a nearly-full bar based off of the min.
+      if (v === null || v === undefined) {
+        angle = 0;
+      }
+
       if (!_this.props.clockwise) {
         startAngle = _this.endAngle + 0.00001;
         endAngle = startAngle - angle - 0.00001;

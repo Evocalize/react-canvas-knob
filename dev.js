@@ -5,7 +5,8 @@ import Knob from './Knob';
 class Root extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: 10 };
+    // this.state = { value: 10 };
+    this.state = { value: null };
   }
   handleChange = (newValue) => {
     this.setState({ value: newValue });
@@ -68,10 +69,18 @@ class Root extends React.Component {
             value={this.state.value}
             onChange={this.handleChange}
             step={10}
-            min={0}
+            min={1}
             max={500}
             postInputText="%"
+            onChangeEnd={() => { }}
         />
+          <button
+              onClick={() => {
+                  this.setState ({value: null });
+              }}
+          >
+              set to null
+          </button>
       </div>
     );
   }
